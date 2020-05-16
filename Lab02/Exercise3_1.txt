@@ -1,0 +1,43 @@
+1. In the first time, operating system has to load all file from hard disk to RAM
+    But the second time, some of them is required to load from hard disk,
+    because operating system hold this data in RAM ("caching").
+2. We can use Makefile for any languages, however they can be compiled, interpreted,
+    linked by shell, bash.
+3. In each dir, we have to create one Makefile, the from the root dir of project,
+    we can write a Makefile to compile it all.
+    e.g.: <content of Makefile in root>
+        all: 
+	        +$(MAKE) -C Lab02
+	        +$(MAKE) -C Proces
+
+        <content of Makefile in Lab02>
+        all: mygrep 
+
+        mygrep: main.o findsubstr.o readline.o
+            gcc -o mygrep main.o findsubstr.o readline.o
+        main.o: main.c findsubstr.h readline.h
+            gcc -c main.c
+        readline.o: readline.c readline.h
+            gcc -c readline.c
+        findsubstr.o: findsubstr.c findsubstr.h
+            gcc -c findsubstr.c
+        clean: 
+            rm -r *.o mygrep
+
+        <content of Makefile in Process>
+        all: process
+
+        process: fork.o
+            g++ -o process fork.o
+
+        fork.o: fork.cpp
+            g++ -c fork.cpp
+
+        clean:
+            rm -r *.o process
+
+    We also can config the Makefile in root dir (mean the dir contains Lab02
+    and Process) to get the main app of both dir.
+    It will execute Makefile in sub directories. How understand about Makefile is
+    that file we be execute in bash/shell, respectively. So, we have to write exactly what
+    we want it run in bash/shell to make it work.
