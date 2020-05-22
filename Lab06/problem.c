@@ -16,8 +16,8 @@ int main(int argc, char *argv[])
 {
 	pthread_t p1, p2;
 	printf("main: begin (counter = %d)\n", counter);
-	pthread_create(&p1, NULL, mythread, "A");
-	pthread_create(&p2, NULL, mythread, "B");
+	pthread_create(&p1, NULL, mythread, (void*) "A");
+	pthread_create(&p2, NULL, mythread, (void*) "B");
 
 	// join waits for the threads to finish
 	pthread_join(p1, NULL);

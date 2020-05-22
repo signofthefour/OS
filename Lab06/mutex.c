@@ -28,8 +28,8 @@ int main(int argc, char **argv)
 	pthread_mutex_init(&lock, NULL);
 	printf("main: begin (counter - %d)\n", counter);
 	        
-	rc = pthread_create(&p1, NULL, mythread, "A"); assert(rc == 0);
-	rc = pthread_create(&p2, NULL, mythread, "B"); assert(rc == 0);
+	rc = pthread_create(&p1, NULL, mythread, (void*)"A"); assert(rc == 0);
+	rc = pthread_create(&p2, NULL, mythread, (void*)"B"); assert(rc == 0);
 	
 	rc = pthread_join(p1, NULL); assert(rc == 0);
 	rc = pthread_join(p2, NULL); assert(rc == 0);

@@ -2,6 +2,7 @@
 #include <pthread.h>
 #include <stdlib.h>
 #include <semaphore.h>
+#include <unistd.h>
 
 #define NUM_TICKETS	35
 #define NUM_SELLERS	4
@@ -22,7 +23,7 @@ int main(int argc, char **argv)
 	sem_init(&ticketLock, 0, 1);
 	for (i = 0; i < NUM_SELLERS; i++) {
 	   tid[i] = i;
-	   pthread_create(&sellers[i], NULL, sellTicket, (void *) tid[i]);
+	   pthread_create(&sellers[i], NULL, sellTicket, (void *) (&tid[i]));
 	}
 
 	for(i = 0; i < NUM_SELLERS; i++)
@@ -36,7 +37,7 @@ int main(int argc, char **argv)
 void *sellTicket(void *arg){
 	int done = false;
 	int numSoldByThisThread = 0;
-	int tid = (int) arg;
+	int tid = (*(int*)arg);
 	while(!done){
 //		sleep(1);
 		sem_wait(&ticketLock);
